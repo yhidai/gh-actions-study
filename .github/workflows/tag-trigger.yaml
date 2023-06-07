@@ -1,0 +1,19 @@
+name: Tag Trigger
+
+on:
+  create:
+    tags:
+      - '*'
+
+jobs:
+  tag-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract tags from GitHub ref
+        id: extract_tags
+        run: |
+          echo "::set-output name=tags::$(echo ${GITHUB_REF#refs/tags/})"
+      - name: Display tags
+        run: |
+          echo "Tags: ${{ steps.extract_tags.outputs.tags }}"
+
